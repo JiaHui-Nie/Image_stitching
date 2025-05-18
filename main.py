@@ -1,20 +1,13 @@
 from PIL import Image
-import time
+import os
 
 def getfiles():
     filelist = []
-    while True:
-        i = input("please DRAG the file to there -->")
-        if (not len(i)) or (i.isspace()):
-            if len(filelist) == 0:
-                print("You haven't put any file yet! Process will exit in 5 seconds.")
-                time.sleep(5)
-                exit(-1)
-            else:
-                break
-        img = Image.open(i)
+    i = input("please DRAG the filefolder to there (don't put any other files in the folder) -->")
+    for j in os.listdir(i):
+        img = Image.open(i+'\\'+j)
         if len(filelist) and (img.size != filelist[-1].size):
-            print("Image size seems like not the same as the one before. Please choose another one.")
+            print("Image size seems like not the same. Please check it.")
             img.close()
         else:
             filelist.append(img)
