@@ -2,7 +2,7 @@
 把一些神奇的图片拼在一起
 
 ## 如何使用主程序
-可以选择下载main.py（需要有python环境），也可以直接下载releases里的（使用pyinstaller构建）
+可以选择下载main.py（需要有python环境），也可以直接下载[releases](https://github.com/JiaHui-Nie/Image_stitching/releases/)（可点击此链接）里的（使用pyinstaller构建）
 
 打开软件，将需要拼接的图片所在文件夹拖入命令提示符（黑色窗口），然后回车，等待即可
 
