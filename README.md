@@ -1,4 +1,4 @@
-# Image_stitching
+# Image_stitching(拼好图)
 把一些神奇的图片拼在一起
 
 ## 如何使用主程序
