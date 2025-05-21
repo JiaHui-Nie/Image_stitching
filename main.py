@@ -1,4 +1,5 @@
 from PIL import Image
+import numpy as np
 import os
 
 def getfiles():
@@ -15,24 +16,22 @@ def getfiles():
 
 def processImages(filelist):
     output = Image.new("RGB", filelist[0].size)
+    current_arr = np.array(output)
+    current_aver = np.abs(current_arr.mean(axis=2)-128)
+
     for i in filelist:
-        for j in range(i.size[0]):
-            for k in range(i.size[1]):
-                pixel = i.getpixel((j, k))
-                if (pixel[0] != 0 or pixel[1] != 0 or pixel[2] != 0):
-                    current = output.getpixel((j, k))
-                    m = (current[0] + current[1] + current[2]) / 3
-                    n = (pixel[0] + pixel[1] + pixel[2])/3
-                    if m > 128:
-                        a = 255-m
-                    else:
-                        a = m
-                    if n > 128:
-                        b = 255-n
-                    else:
-                        b = n
-                    if(b > a) or ((m == 0) and (n != 0)):
-                        output.putpixel((j, k), pixel)
+        if i.mode != "RGB":
+            i = i.convert("RGB")
+        arr = np.array(i)
+        aver = np.abs(arr.mean(axis=2)-128)
+
+        operate = np.less(aver, current_aver)
+        for j in range(i.size[1]):
+            for k in range(i.size[0]):
+                if operate[j][k]:
+                    current_arr[j][k] = arr[j][k]
+                    current_aver[j][k] = aver[j][k]
+    output = Image.fromarray(current_arr)
     output.save("output.png")
 
 if __name__ == "__main__":
